@@ -1,7 +1,8 @@
 <template>
-    <div class="films-page container">
-        <h2>Выбери фильм на свой вкус</h2>
-        <post-list :films="films" />
+    <div class="posts container">
+        <h2>Посты</h2>
+        <post-list :posts="posts" :urls="urls" />
+
     </div>
 </template>
 
@@ -13,19 +14,41 @@
         components: { PostList },
         data() {
             return {
-                posts
+                posts: Array,
+                pageNum: this.$route.params.pageNum,
+                params: {
+                    limit: 10,
+                    offset: 0
+                },
+                urls: {
+                    apiStatic: 'http://localhost:5000/',
+                    apiUrl: 'http://localhost:5000/api'
+                }
             }
         },
         async mounted() {
-            let response = await fetch('http://localhost:5000/posts', {
-                'POST',
-                ''
-            });
+            await this.getPosts();
+        },
+        methods: {
+            async switchPage() {
+
+            },
+
+            async getPosts() {
+                const baseUrl = '/posts';
+                const qs = Object.keys(this.params)
+                    .map(key => `${key}=${this.params[key]}`)
+                    .join('&');
+                this.axios
+                    .get(this.urls.apiUrl + baseUrl + '?' + qs)
+                    .then(response => {this.posts = response.data; console.log(response.data)})
+
+            }
         }
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     h2 {
         font-size: 40px;
         color:#ffffff;

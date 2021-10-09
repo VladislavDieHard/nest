@@ -5,14 +5,9 @@
                     :to="{ name: 'main' }"
                     class="logo"
             >
-                Кинотеатр
+                <img src="" alt="">
             </router-link>
             <div class="links">
-<!--                <router-link-->
-<!--                        :to="{ name: 'films' }"-->
-<!--                >-->
-<!--                    Фильмы-->
-<!--                </router-link>-->
                 <button
                         type="button"
                         class="btn btn-outline-light btn-lg"
@@ -49,32 +44,32 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     header {
-        background-color: #0c0c0c;
-        .container {
-            margin-top: 0;
-            display: flex;
-            align-items: baseline;
-        }
-        padding: 20px 0;
-        a {
-            text-decoration: none;
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 25px;
-        }
-        .logo {
-            color: #EB5804;
-            font-size: 30px;
-        }
-        .links {
-            margin-left: 75px;
-            display: flex;
-            flex-grow: 1;
-        }
-        button {
-            margin-left: auto;
-        }
+        background-color: #d7ca70;
+        padding: 20px;
+    }
+    .container {
+        margin-top: 0;
+        display: flex;
+        align-items: baseline;
+    }
+    a {
+        text-decoration: none;
+        font-weight: 700;
+        color: #ffffff;
+        font-size: 25px;
+    }
+    .logo {
+        color: #EB5804;
+        font-size: 30px;
+    }
+    .links {
+        margin-left: 75px;
+        display: flex;
+        flex-grow: 1;
+    }
+    button {
+        margin-left: auto;
     }
 </style>

@@ -4,7 +4,7 @@ import {
     Delete,
     Get,
     Param,
-    Post,
+    Post, Query,
     UploadedFiles,
     UseGuards,
     UseInterceptors
@@ -21,8 +21,11 @@ export class PostController {
     constructor(private postService: PostService) {}
 
     @Get()
-    getPosts() {
-        return this.postService.getPosts();
+    getPosts(
+        @Query('limit') limit: number,
+        @Query('offset') offset: number
+    ) {
+        return this.postService.getPosts(limit, offset);
     }
 
     @Get(':id')

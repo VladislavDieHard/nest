@@ -13,8 +13,12 @@ export class PostService {
                 private fileService: FileService
     ) {}
 
-    getPosts() {
-        return this.postModel.find();
+    getPosts(limit = 10, offset = 0) {
+        return this.postModel
+            .find()
+            .populate('author', ['avatarUrl', 'username', 'id'])
+            .skip(Number(offset))
+            .limit(Number(limit));
     }
 
     getPostsByTag(tag) {

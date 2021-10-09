@@ -1,18 +1,21 @@
 <template>
    <div class="post-list">
-
+      <post-item v-for="post in posts" :post="post" :static="urls.apiStatic"/>
    </div>
 </template>
 
 <script>
+   import PostItem from './PostItem'
+
     export default {
+       components: {PostItem},
+       props: ['posts', 'urls'],
         data() {
             return {
                 auth: false
             }
         },
         created() {
-            this.auth = localStorage.getItem('auth') !== null
         },
         methods: {
             changeUserState() {
@@ -28,5 +31,12 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+   .post-list {
+      width: 80%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+   }
 </style>

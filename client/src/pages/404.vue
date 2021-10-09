@@ -6,17 +6,18 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
     .not-found {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        h1 {
-            color: #ffffff;
-            font-size: 70px;
-            margin-bottom: 20px;
-        }
+    }
+
+    h1 {
+        color: #ffffff;
+        font-size: 70px;
+        margin-bottom: 20px;
     }
 </style>
