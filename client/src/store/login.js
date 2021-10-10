@@ -1,47 +1,61 @@
 import axios from 'axios';
 import coockie from './cookie';
 
-const userLogin = async (credentials) => {
-    return await axios({
-        method: 'post',
-        url: 'http://localhost:5000/api/auth/login',
-        data: credentials
+async function userLogin(credentials) {
+    const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(credentials)
     })
-        .then((response) => {return response.data})
-        .catch((err) => {return err.message})
+    if (!response.ok) {
+        let result = await response.json()
+        return {
+            status: 404,
+            message: result.message
+        };
+    } else {
+        return await response.json()
+    }
+
 }
 
 export default {
     state: {
         urls: {
-            static: 'http://192.168.0.243:5000/',
-            api: 'http://192.168.0.243:5000/api'
+            static: 'http://localhost:5000/',
+            api: 'http://localhost:5000/api'
         },
-        dialogs: {
-            login: false
-        },
-        user: coockie.getCookie('user'),
-        authorized: false
+        login: false,
+        user: JSON.parse(coockie.getCookie('user')),
+        token: coockie.getCookie('token'),
+        authorized: JSON.parse(coockie.getCookie('authorized')),
     },
     getters: {
         getDialogs(state) {
-            return state.dialogs;
+            return state.login;
         },
         getAuthorized(state) {
             return state.authorized;
+        },
+        getUser(state) {
+            return state.user;
+        },
+        getUrls(state) {
+            return state.urls;
         }
     },
     mutations: {
-        SET_DIALOG_STATE() {
-
+        SET_LOGIN_STATE(state) {
+            state.login = !state.login;
         },
         SET_USER(state, data) {
-            if (data !== null || undefined) {
-                coockie.setCookie('user', data)
-                state.user = data;
-                state.dialogs.login = false;
-                state.authorized = true;
-            }
+            console.log(data)
+            coockie.setCookie('user', JSON.stringify(data.user));
+            coockie.setCookie('token', data.access_token);
+            coockie.setCookie('authorized', JSON.stringify(true));
+            state.authorized = true;
         },
         EXIT(state) {
             state.authorized = false
@@ -49,11 +63,12 @@ export default {
     },
     actions: {
         async userLogin({ commit }, credentials) {
-            try {
-                const user = await userLogin(credentials);
-                commit('SET_USER', user);
-            } catch (err) {
-                console.error(err)
+            const result = await userLogin(credentials);
+            if (result.status === 404) {
+                return result;
+            } else {
+                commit('SET_USER', result);
+                return result;
             }
         }
     }

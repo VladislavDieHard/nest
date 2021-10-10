@@ -1,21 +1,33 @@
 <template>
     <div>
-        <md-dialog :md-active.sync="this.$store">
+        <md-dialog :md-active.sync="openDialog">
             <auth-form></auth-form>
         </md-dialog>
-        <md-button class="md-primary" @click="this.$store.dialogs.login = !this.$store.dialogs.login">Войти</md-button>
+        <md-button class="md-primary" @click="toggleState">Войти</md-button>
     </div>
 </template>
 
 <script>
     import AuthForm from "./AuthForm";
+    import { mapGetters, mapMutations } from  'vuex';
 
     export default {
         name: 'DialogLogin',
         components: { AuthForm },
         data() {
             return {
-                showDialog: this.$store.dialogs.login
+            }
+        },
+        computed: {
+            ...mapGetters(['getDialogs']),
+            openDialog() {
+                return this.getDialogs;
+            }
+        },
+        methods: {
+            ...mapMutations(['SET_LOGIN_STATE']),
+            toggleState() {
+                this.SET_LOGIN_STATE()
             }
         }
     }

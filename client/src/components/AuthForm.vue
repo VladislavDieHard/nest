@@ -22,7 +22,7 @@
                                 <span class="md-error" v-else-if="!$v.password.minlength">Неподходящий пароль!</span>
                             </md-field>
                         </div>
-
+                        <span v-if="loginErr.bool">{{loginErr.message}}</span>
                     </div>
                 </md-card-content>
 
@@ -30,7 +30,7 @@
 
                 <md-card-actions>
                     <md-button type="submit" class="md-primary" :disabled="sending">Войти</md-button>
-                    <md-button type="submit" class="md-primary">Отмена</md-button>
+                    <md-button  class="md-primary" @click="toggleState">Отмена</md-button>
                 </md-card-actions>
             </md-card>
 
@@ -45,7 +45,7 @@
         required,
         minLength,
     } from 'vuelidate/lib/validators';
-    import { mapActions, mapGetters } from 'vuex';
+    import {mapActions, mapGetters, mapMutations} from 'vuex';
 
     export default {
         name: 'AuthForm',
@@ -55,6 +55,11 @@
                 username: '',
                 password: '',
                 sending: false,
+                userSaved: false,
+                loginErr: {
+                    message: '',
+                    bool: false
+                }
             }
         },
         validations: {
@@ -75,7 +80,10 @@
         },
         methods: {
             ...mapActions(['userLogin']),
-
+            ...mapMutations(['SET_LOGIN_STATE']),
+            toggleState() {
+                this.SET_LOGIN_STATE()
+            },
             getValidationClass (fieldName) {
                 const field = this.$v[fieldName];
 
@@ -87,31 +95,28 @@
             },
             clearForm () {
                 this.$v.$reset();
-                this.form.username = null;
-                this.form.password = null;
+                this.username = null;
+                this.password = null;
             },
-            loginUser () {
-                console.log(this.username)
+            async loginUser () {
                 this.sending = true;
                 const credentials = {
                     username: this.username,
                     password: this.password
                 }
-
-                this.userLogin(credentials)
-                if (this.getDialogs) {
-
+                let result = await this.userLogin(credentials)
+                if (result.status === 404) {
+                    this.sending = false;
+                    this.loginErr.bool = true;
+                    this.loginErr.message = result.message;
+                } else {
+                    this.userSaved = true
+                    this.sending = false
+                    this.loginErr.bool = false;
+                    this.loginErr.message = '';
+                    this.SET_LOGIN_STATE()
+                    this.clearForm()
                 }
-
-                // this.$store.dispatch('userLogin', credentials);
-
-                // Instead of this timeout, here you can call your API
-                // window.setTimeout(() => {
-                //     this.lastUser = `${this.form.username}`
-                //     this.userSaved = true
-                //     this.sending = false
-                //     this.clearForm()
-                // }, 1500)
             },
             validateUser () {
                 this.$v.$touch()

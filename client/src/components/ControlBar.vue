@@ -48,6 +48,7 @@
 
 <style scoped>
     .control-bar {
+        position: sticky;
         top: 20px;
         margin: calc(5vw + 24px) auto;
         width: 80%;

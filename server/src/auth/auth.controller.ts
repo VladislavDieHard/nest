@@ -19,8 +19,7 @@ export class AuthController {
   // @UseGuards(AuthGuard('local'))
   @Post('/login')
   async login(@Body() dto: UserLoginDto) {
-    console.log(dto)
-    return this.authService.login(dto);
+    return await this.authService.login(dto);
   }
 
   @Post('/register')

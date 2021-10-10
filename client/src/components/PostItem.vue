@@ -6,10 +6,13 @@
                 :to="{ name: 'userPage', params: { id: post.author._id} }"
             >
                 <span>{{post.author.username}}</span>
-                <img :src="static + post.author.avatarUrl" :alt="post.author.username">
+                <md-avatar>
+                    <img :src="static + post.author.avatarUrl" :alt="post.author.username">
+                </md-avatar>
             </router-link>
         </div>
         <div class="post-images">
+
             <img v-for="imgUrl in post.images" :src="static + imgUrl" :alt="post.title">
         </div>
     </div>
@@ -40,9 +43,15 @@
     .post-author {
         display: flex;
         justify-content: center;
+        align-items: center;
         flex-direction: column;
-        width: 8vw;
-        height: 10vw;
+        width: 5vw;
+        height: 5vw;
+    }
+
+    .post-author a {
+        display: flex;
+        flex-direction: column;
     }
 
     .post-author span {

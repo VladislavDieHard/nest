@@ -26,8 +26,8 @@
                     offset: 0
                 },
                 urls: {
-                    apiStatic: 'http://192.168.0.243:5000/',
-                    apiUrl: 'http://192.168.0.243:5000/api'
+                    apiStatic: 'http://localhost:5000/',
+                    apiUrl: 'http://localhost:5000/api'
                 }
             }
         },
