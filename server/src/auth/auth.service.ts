@@ -8,17 +8,20 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 @Injectable()
 export class AuthService {
     constructor(
-        private usersService: UserService,
+        private userService: UserService,
         private jwtService: JwtService,
     ) {}
 
     async login(dto: UserLoginDto): Promise<any> {
         const validatedUser = await this.validateUser(dto);
-        return await this.generateToken(validatedUser);
+        return {
+            token: await this.generateToken(validatedUser),
+            user: await this.userService.getUserByName(dto.username)
+        }
     }
 
     async register(dto: CreateUserDto, avatar) {
-        const user = await this.usersService.createUser(dto, avatar);
+        const user = await this.userService.createUser(dto, avatar);
         return this.generateToken(user);
     }
 
@@ -30,7 +33,7 @@ export class AuthService {
     }
 
     private async validateUser(userDto: UserLoginDto) {
-        const user = await this.usersService.getUserByName(userDto.username);
+        const user = await this.userService.getUserByName(userDto.username);
         const passwordEquals = await bcrypt.compareSync(userDto.password, user.password);
         if (user && passwordEquals) {
             return user;

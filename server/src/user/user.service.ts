@@ -28,7 +28,7 @@ export class UserService {
     }
 
     async getUserById(id): Promise<User> {
-        return this.userModel.findById(id, {password: 0}).populate('posts');
+        return this.userModel.findById(id, {password: 0});
     }
 
     async getUserByName(username): Promise<User> {

@@ -1,27 +1,34 @@
 <template>
-    <header>
-        <div class="container">
-            <router-link
-                    :to="{ name: 'main' }"
-                    class="logo"
-            >
-                <img src="" alt="">
-            </router-link>
-            <div class="links">
-                <button
-                        type="button"
-                        class="btn btn-outline-light btn-lg"
-                        @click="changeUserState"
+    <md-app md-waterfall md-mode="fixed ">
+        <md-app-toolbar class="toolbar ">
+            <div class="home">
+                <router-link
+                        :to="{ name: 'main' }"
+                        class="logo"
                 >
-                    {{ auth ? 'Выйти' : 'Войти' }}
-                </button>
+                    <i class="fas fa-home"></i>
+                </router-link>
             </div>
-        </div>
-    </header>
+            <div class="links">
+                <div class="not-authorized" v-if="authorized === false">
+                    <dialog-login></dialog-login>
+                    <dialog-register></dialog-register>
+                </div>
+                <div class="authorized" v-if="authorized === true">
+                    <md-button class="md-accent" @click="exit">Выйти</md-button>
+                </div>
+            </div>
+        </md-app-toolbar>
+    </md-app>
 </template>
 
 <script>
+    import DialogLogin from "../components/DialogLogin";
+    import DialogRegister from "./DialogRegister";
+    import { mapActions, mapGetters, mapMutations } from 'vuex';
+
     export default {
+        components: {DialogLogin, DialogRegister},
         data() {
             return {
                 auth: false
@@ -30,7 +37,17 @@
         created() {
             this.auth = localStorage.getItem('auth') !== null
         },
+        computed: {
+            ...mapGetters(['getDialogs', 'getAuthorized']),
+            authorized() {
+                return this.getAuthorized;
+            },
+        },
         methods: {
+            ...mapMutations(['EXIT']),
+            exit() {
+                this.EXIT()
+            },
             changeUserState() {
                 if (this.auth) {
                     localStorage.removeItem('auth')
@@ -45,31 +62,21 @@
 </script>
 
 <style scoped>
-    header {
-        background-color: #d7ca70;
-        padding: 20px;
-    }
-    .container {
-        margin-top: 0;
+    .toolbar {
         display: flex;
-        align-items: baseline;
+        justify-content: space-between;
     }
-    a {
-        text-decoration: none;
-        font-weight: 700;
-        color: #ffffff;
-        font-size: 25px;
-    }
-    .logo {
-        color: #EB5804;
-        font-size: 30px;
-    }
-    .links {
-        margin-left: 75px;
+
+    .home {
         display: flex;
-        flex-grow: 1;
+        justify-content: center;
+        align-items: center;
+        width: 3vw;
+        height: 3vw;
+        font-size: 2.6vw;
     }
-    button {
-        margin-left: auto;
+
+    .not-authorized {
+        display: flex;
     }
 </style>

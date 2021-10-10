@@ -1,22 +1,15 @@
 <template>
-    <div class="container">
-        <div class="posts">
-            <h2>Посты</h2>
-            <post-list :posts="posts" :urls="urls" />
-        </div>
-        <div class="control-bar-container">
-            <control-bar></control-bar>
-        </div>
+    <div class="control-bar md-elevation-12">
+
     </div>
 </template>
 
 <script>
     import PostList from "../components/PostList";
-    import ControlBar from "../components/ControlBar";
 
 
     export default {
-        components: { PostList, ControlBar },
+        components: { PostList,  },
         data() {
             return {
                 posts: Array,
@@ -26,8 +19,8 @@
                     offset: 0
                 },
                 urls: {
-                    apiStatic: 'http://192.168.0.243:5000/',
-                    apiUrl: 'http://192.168.0.243:5000/api'
+                    apiStatic: 'http://localhost:5000/',
+                    apiUrl: 'http://localhost:5000/api'
                 }
             }
         },
@@ -54,26 +47,10 @@
 </script>
 
 <style scoped>
-    .container {
-        display: flex;
-        margin-top: 5vw;
-    }
-
-    .posts {
-        width: 65%;
-    }
-
-    .control-bar-container {
-        width: 35%;
-        position: relative;
-    }
-
-    h2 {
-        color: #202020;
-        height: 4vw;
-        padding: 0 25%;
-        display: flex;
-        align-items: center;
-        font-size: 3vw;
+    .control-bar {
+        top: 20px;
+        margin: calc(5vw + 24px) auto;
+        width: 80%;
+        height: 500px;
     }
 </style>

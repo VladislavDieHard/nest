@@ -30,7 +30,7 @@ export class PostService {
     }
 
     getPostsByUserId(id) {
-        return this.postModel.find({author: id});
+        return this.postModel.find({author: id}).populate('author', ['avatarUrl', 'username', 'id']);
     }
 
     async createPost(dto: CreatePostDto, images): Promise<Post> {

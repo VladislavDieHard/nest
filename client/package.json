@@ -9,12 +9,17 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vue-router": "^3.5.2"
+    "vue-axios": "^3.3.7",
+    "vue-material": "^1.0.0-beta-15",
+    "vue-router": "^3.5.2",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
+    "axios": "^0.22.0",
     "vue-template-compiler": "^2.6.11",
+    "vuelidate": "^0.7.6",
     "webpack": "^4.0.0"
   }
 }

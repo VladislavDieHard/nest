@@ -2,6 +2,7 @@ import VueRouter from "vue-router";
 import MainPage from "../pages/MainPage";
 import BaseLayout from "../pages/BaseLayout";
 import NotFound from "../pages/404";
+import UserPage from "../pages/UserPage";
 
 
 export default new VueRouter({
@@ -18,11 +19,16 @@ export default new VueRouter({
                     component: MainPage
                 },
                 {
+                    path: 'user/:id',
+                    name: 'userPage',
+                    component: UserPage
+                },
+                {
                     path: '*',
                     name: 'notFound',
                     component: NotFound
-                },
+                }
             ]
-        }
+        },
     ]
 })
