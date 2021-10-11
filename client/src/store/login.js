@@ -1,4 +1,3 @@
-import axios from 'axios';
 import coockie from './cookie';
 
 async function userLogin(credentials) {
@@ -28,9 +27,9 @@ export default {
             api: 'http://localhost:5000/api'
         },
         login: false,
-        user: JSON.parse(coockie.getCookie('user')),
-        token: coockie.getCookie('token'),
-        authorized: JSON.parse(coockie.getCookie('authorized')),
+        user: coockie.getCookie('user', true),
+        token: coockie.getCookie('token', false),
+        authorized: coockie.getCookie('authorized', true),
     },
     getters: {
         getDialogs(state) {
@@ -51,7 +50,6 @@ export default {
             state.login = !state.login;
         },
         SET_USER(state, data) {
-            console.log(data)
             coockie.setCookie('user', JSON.stringify(data.user));
             coockie.setCookie('token', data.access_token);
             coockie.setCookie('authorized', JSON.stringify(true));

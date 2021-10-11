@@ -1,9 +1,13 @@
 const Cookie = {
-    getCookie(name) {
+    getCookie(name, parse = false) {
         let matches = document.cookie.match(new RegExp(
             "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
         ));
-        return matches ? decodeURIComponent(matches[1]) : undefined;
+        if (parse) {
+            return this.parseException(matches ? decodeURIComponent(matches[1]) : undefined)
+        } else {
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
     },
 
     setCookie(name, value, options = {}) {
@@ -36,6 +40,14 @@ const Cookie = {
         this.setCookie(name, "", {
             'max-age': -1
         })
+    },
+
+    parseException(value) {
+        try {
+            return JSON.parse(value);
+        } catch (e) {
+            return null;
+        }
     }
 };
 export default Cookie;
