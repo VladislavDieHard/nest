@@ -34,6 +34,7 @@
         },
         methods: {
             async getUser() {
+                console.log(this.urls.apiUrl + '/users/' + this.$route.params.id)
                 return await this.axios
                     .get(this.urls.apiUrl + '/users/' + this.$route.params.id)
                     .then(response => {return response.data})
@@ -42,6 +43,7 @@
 
             async getPosts(userId) {
                 const baseUrl = `/posts/user/${userId}`;
+                console.log(this.urls.apiUrl + baseUrl)
                 return this.axios
                     .get(this.urls.apiUrl + baseUrl)
                     .then(response => {return response.data})

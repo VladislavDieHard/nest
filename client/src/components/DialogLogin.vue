@@ -35,7 +35,7 @@
 
 <style scoped>
     .md-dialog /deep/.md-dialog-container {
-        width: 30vw;
-        height: 30vw;
+        width: 400px;
+        height: 350px;
     }
 </style>

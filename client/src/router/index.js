@@ -3,6 +3,7 @@ import MainPage from "../pages/MainPage";
 import BaseLayout from "../pages/BaseLayout";
 import NotFound from "../pages/404";
 import UserPage from "../pages/UserPage";
+import RegisterPage from "../pages/RegisterPage";
 
 
 export default new VueRouter({
@@ -17,6 +18,11 @@ export default new VueRouter({
                     path: '',
                     name: 'main',
                     component: MainPage
+                },
+                {
+                    path: 'register',
+                    name: 'register',
+                    component: RegisterPage
                 },
                 {
                     path: 'user/:id',

@@ -15,9 +15,9 @@ async function userLogin(credentials) {
             message: result.message
         };
     } else {
-        return await response.json()
+        const result = await response.json();
+        return result;
     }
-
 }
 
 export default {
@@ -54,9 +54,16 @@ export default {
             coockie.setCookie('token', data.access_token);
             coockie.setCookie('authorized', JSON.stringify(true));
             state.authorized = true;
+            state.user = data.user;
+            state.token = data.access_token;
         },
         EXIT(state) {
-            state.authorized = false
+            coockie.deleteCookie('authorized');
+            coockie.deleteCookie('user');
+            coockie.deleteCookie('token');
+            state.authorized = false;
+            state.user = null;
+            state.token = null;
         }
     },
     actions: {

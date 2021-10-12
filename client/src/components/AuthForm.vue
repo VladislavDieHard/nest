@@ -8,7 +8,7 @@
 
                 <md-card-content>
                     <div class="md-layout md-gutter">
-                        <div class="md-layout-item md-small-size-100">
+                        <div class="md-layout-item md-size-80">
                             <md-field :class="getValidationClass('username')">
                                 <label for="username-login">Имя пользователя</label>
                                 <md-input name="username" id="username-login" autocomplete="given-name" v-model="username" :disabled="sending" />
@@ -141,6 +141,7 @@
     }
 
     .md-card {
+        width: 100%;
         padding: 1.5vw;
         display: flex;
         flex-direction: column;
@@ -168,5 +169,11 @@
         top: 0;
         right: 0;
         left: 0;
+    }
+
+    .md-layout {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
     }
 </style>

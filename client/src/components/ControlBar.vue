@@ -24,25 +24,7 @@
                 }
             }
         },
-        async mounted() {
-            await this.getPosts();
-        },
-        methods: {
-            async switchPage() {
-
-            },
-
-            async getPosts() {
-                const baseUrl = '/posts';
-                const qs = Object.keys(this.params)
-                    .map(key => `${key}=${this.params[key]}`)
-                    .join('&');
-                this.axios
-                    .get(this.urls.apiUrl + baseUrl + '?' + qs)
-                    .then(response => {this.posts = response.data; console.log(response.data)});
-
-            }
-        }
+        methods: {}
     }
 </script>
 

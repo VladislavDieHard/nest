@@ -10,24 +10,6 @@
     export default {
        components: {PostItem},
        props: ['posts', 'urls'],
-        data() {
-            return {
-                auth: false
-            }
-        },
-        created() {
-        },
-        methods: {
-            changeUserState() {
-                if (this.auth) {
-                    localStorage.removeItem('auth')
-                    this.$router.push({ name: 'main'})
-                } else {
-                    localStorage.setItem('auth', true)
-                    this.auth = true
-                }
-            }
-        }
     }
 </script>
 

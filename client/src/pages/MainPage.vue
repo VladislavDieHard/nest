@@ -46,7 +46,7 @@
                     .join('&');
                 this.axios
                     .get(this.urls.apiUrl + baseUrl + '?' + qs)
-                    .then(response => {this.posts = response.data; console.log(response.data)});
+                    .then(response => {this.posts = response.data});
 
             }
         }

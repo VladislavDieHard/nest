@@ -18,7 +18,7 @@ export class AuthService {
 
     async login(dto: UserLoginDto): Promise<any> {
         const validatedUser = await this.validateUser(dto);
-        const user = await this.userModel.findOne({username: validatedUser.username},{password: 0});
+        const user = await this.userModel.findOne({username: validatedUser.username},{password: 0},{fields: ['id', 'username']});
         return {
             ...await this.generateToken(validatedUser),
             user: user

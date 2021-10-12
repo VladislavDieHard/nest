@@ -26,7 +26,11 @@
                 </div>
                 <div class="not-authorized" v-else>
                     <dialog-login></dialog-login>
-                    <dialog-register></dialog-register>
+                    <router-link
+                            :to="{ name: 'register' }"
+                    >
+                        <md-button class="md-accent">Зарегистрироваться</md-button>
+                    </router-link>
                 </div>
             </div>
         </md-app-toolbar>
@@ -35,11 +39,10 @@
 
 <script>
     import DialogLogin from "../components/DialogLogin";
-    import DialogRegister from "./DialogRegister";
-    import { mapActions, mapGetters, mapMutations } from 'vuex';
+    import { mapGetters, mapMutations } from 'vuex';
 
     export default {
-        components: {DialogLogin, DialogRegister},
+        components: {DialogLogin},
         data() {
             return {
             }
@@ -50,7 +53,6 @@
                 return this.getAuthorized;
             },
             user() {
-                console.log(this.getUser)
                 return this.getUser;
             },
             urls() {
@@ -77,8 +79,8 @@
         justify-content: center;
         align-items: center;
         width: 3vw;
-        height: 3vw;
-        font-size: 2.6vw;
+        height: 100%;
+        font-size: 25px;
     }
 
     .not-authorized {
