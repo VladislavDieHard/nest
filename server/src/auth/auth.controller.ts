@@ -2,9 +2,7 @@ import {
   Body,
   Controller,
   Post,
-  Request,
   UploadedFiles,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -32,6 +30,8 @@ export class AuthController {
     ]),
   )
   registration(@UploadedFiles() files, @Body() dto: CreateUserDto) {
+    console.log(dto)
+    console.log(files)
     return this.authService.register(dto, files.image);
   }
 

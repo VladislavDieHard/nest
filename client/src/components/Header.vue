@@ -29,7 +29,7 @@
                     <router-link
                             :to="{ name: 'register' }"
                     >
-                        <md-button class="md-accent">Зарегистрироваться</md-button>
+                        <md-button class="md-accent">Регистрация</md-button>
                     </router-link>
                 </div>
             </div>

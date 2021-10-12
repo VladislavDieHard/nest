@@ -1,6 +1,6 @@
 <template>
    <div class="post-list">
-      <post-item v-for="post in posts" :post="post" :static="urls.apiStatic"/>
+      <post-item v-for="post in posts" :post="post" :static="urls.static"/>
    </div>
 </template>
 

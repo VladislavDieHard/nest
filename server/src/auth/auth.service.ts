@@ -26,8 +26,12 @@ export class AuthService {
     }
 
     async register(dto: CreateUserDto, avatar) {
-        const user = await this.userService.createUser(dto, avatar);
-        return this.generateToken(user);
+        const createdUser = await this.userService.createUser(dto, avatar);
+        const user = await this.userModel.findOne({username: createdUser.username},{password: 0},{fields: ['id', 'username']});
+        return {
+            ...await this.generateToken(createdUser),
+            user: user
+        }
     }
 
     private async generateToken(user: any) {

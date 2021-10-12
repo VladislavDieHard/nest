@@ -13,6 +13,7 @@
 <script>
     import PostList from "../components/PostList";
     import ControlBar from "../components/ControlBar";
+    import {mapGetters} from "vuex";
 
 
     export default {
@@ -24,15 +25,18 @@
                 params: {
                     limit: 10,
                     offset: 0
-                },
-                urls: {
-                    apiStatic: 'http://localhost:5000/',
-                    apiUrl: 'http://localhost:5000/api'
                 }
+            }
+        },
+        computed: {
+            ...mapGetters(['getUrls']),
+            urls() {
+                return this.getUrls
             }
         },
         async mounted() {
             await this.getPosts();
+            // console.log(process.env.VUE_APP_CONFIG_WORK)
         },
         methods: {
             async switchPage() {
@@ -45,9 +49,8 @@
                     .map(key => `${key}=${this.params[key]}`)
                     .join('&');
                 this.axios
-                    .get(this.urls.apiUrl + baseUrl + '?' + qs)
+                    .get(this.urls.api + baseUrl + '?' + qs)
                     .then(response => {this.posts = response.data});
-
             }
         }
     }
