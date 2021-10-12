@@ -13,12 +13,17 @@ export class PostService {
                 private fileService: FileService
     ) {}
 
-    getPosts(limit = 10, offset = 0) {
-        return this.postModel
+    async getPosts(limit = 10, offset = 0) {
+        const posts = await this.postModel
             .find()
             .populate('author', ['avatarUrl', 'username', 'id'])
             .skip(Number(offset))
             .limit(Number(limit));
+        const postsCount = await this.postModel.countDocuments();
+        return {
+            posts,
+            count: postsCount
+        };
     }
 
     getPostsByTag(tag) {

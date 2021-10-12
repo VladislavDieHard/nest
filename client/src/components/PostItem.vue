@@ -5,7 +5,7 @@
             <router-link
                 :to="{ name: 'userPage', params: { id: post.author._id} }"
             >
-                <span>{{post.author.username}}</span>
+                <md-tooltip md-direction="top">{{post.author.username}}</md-tooltip>
                 <md-avatar>
                     <img :src="static + post.author.avatarUrl" :alt="post.author.username">
                 </md-avatar>

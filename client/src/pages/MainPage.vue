@@ -13,14 +13,14 @@
 <script>
     import PostList from "../components/PostList";
     import ControlBar from "../components/ControlBar";
-    import {mapGetters} from "vuex";
+    import {mapGetters, mapActions} from "vuex";
 
 
     export default {
         components: { PostList, ControlBar },
         data() {
             return {
-                posts: Array,
+                postsCount: null,
                 pageNum: this.$route.params.pageNum,
                 params: {
                     limit: 10,
@@ -28,29 +28,26 @@
                 }
             }
         },
+        async beforeMount() {
+            await this.getData()
+            // console.log(this.computed)
+            // if (posts !== undefined) {
+            //
+            // }
+        },
         computed: {
-            ...mapGetters(['getUrls']),
+            ...mapGetters(['getUrls', 'getPosts']),
             urls() {
                 return this.getUrls
+            },
+            posts() {
+                return this.getPosts
             }
         },
-        async mounted() {
-            await this.getPosts();
-            // console.log(process.env.VUE_APP_CONFIG_WORK)
-        },
         methods: {
-            async switchPage() {
-
-            },
-
-            async getPosts() {
-                const baseUrl = '/posts';
-                const qs = Object.keys(this.params)
-                    .map(key => `${key}=${this.params[key]}`)
-                    .join('&');
-                this.axios
-                    .get(this.urls.api + baseUrl + '?' + qs)
-                    .then(response => {this.posts = response.data});
+            ...mapActions(['downloadPosts']),
+            async getData() {
+                await this.downloadPosts();
             }
         }
     }

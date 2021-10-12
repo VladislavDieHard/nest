@@ -11,15 +11,19 @@
             </div>
             <div class="auth">
                 <div class="user-auth" v-if="authorized">
-                    <md-button class="md-icon-button md-raised md-primary">
-                        <i class="fas fa-plus"></i>
-                    </md-button>
+                    <div class="add-btn">
+                        <md-button class="md-icon-button md-raised md-primary">
+                            <i class="fas fa-plus"></i>
+                        </md-button>
+                        <md-tooltip md-direction="bottom">Создать пост</md-tooltip>
+                    </div>
                     <router-link
                             :to="{ name: 'userPage', params: { id: user._id} }"
                             class="user"
                     >
                         <md-avatar>
                             <img :src="urls.static + user.avatarUrl" alt="user.username">
+                            <md-tooltip md-direction="bottom">{{user.username}}</md-tooltip>
                         </md-avatar>
                     </router-link>
                     <md-button class="md-accent" @click="exit">Выйти</md-button>
@@ -94,5 +98,9 @@
     .user-auth {
         display: flex;
         align-items: center;
+    }
+
+    .add-btn {
+        padding: 6px;
     }
 </style>

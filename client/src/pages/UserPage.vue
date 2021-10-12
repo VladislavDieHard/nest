@@ -8,7 +8,14 @@
         </div>
         <div class="user-posts">
             <post-list v-if="postExists" :posts="userPosts" :urls="urls"/>
-            <h1 class="no-posts" v-else>У пользователя {{user.username}} пока-что нет постов 😩</h1>
+            <md-empty-state
+                    v-else
+                    md-icon="content_paste"
+                    md-label="Create your first project"
+                    md-description="Creating project, you'll be able to upload your design and collaborate with people.">
+                <md-button class="md-primary md-raised">Create first project</md-button>
+            </md-empty-state>
+<!--            <h1 class="no-posts" v-else>У пользователя {{user.username}} пока-что нет постов 😩</h1>-->
         </div>
     </div>
 </template>
@@ -30,6 +37,12 @@
         async beforeMount() {
             this.user = await this.getUser()
             this.userPosts = await this.getPosts(this.user._id);
+        },
+        watch: {
+            async $route(to, from) {
+                this.user = await this.getUser()
+                this.userPosts = await this.getPosts(to.params.id);
+            }
         },
         computed: {
             ...mapGetters(['getUrls']),
