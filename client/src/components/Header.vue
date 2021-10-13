@@ -11,12 +11,17 @@
             </div>
             <div class="auth">
                 <div class="user-auth" v-if="authorized">
-                    <div class="add-btn">
-                        <md-button class="md-icon-button md-raised md-primary">
-                            <i class="fas fa-plus"></i>
-                        </md-button>
-                        <md-tooltip md-direction="bottom">Создать пост</md-tooltip>
-                    </div>
+                    <router-link
+                            :to="{ name: 'post' }"
+                            class="add-btn-link"
+                    >
+                        <div class="add-btn">
+                            <md-button class="md-icon-button md-raised md-primary">
+                                <i class="fas fa-plus"></i>
+                            </md-button>
+                            <md-tooltip md-direction="bottom">Создать пост</md-tooltip>
+                        </div>
+                    </router-link>
                     <router-link
                             :to="{ name: 'userPage', params: { id: user._id} }"
                             class="user"

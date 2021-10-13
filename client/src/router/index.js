@@ -4,6 +4,8 @@ import BaseLayout from "../pages/BaseLayout";
 import NotFound from "../pages/404";
 import UserPage from "../pages/UserPage";
 import RegisterPage from "../pages/RegisterPage";
+import PostCreatePage from "../pages/PostCreatePage";
+import store from "../store";
 
 
 export default new VueRouter({
@@ -22,7 +24,19 @@ export default new VueRouter({
                 {
                     path: 'register',
                     name: 'register',
-                    component: RegisterPage
+                    component: RegisterPage,
+                    beforeEnter: (to, from, next) => {
+                        if (store.state.auth.authorized) {
+                            next({name: 'main'});
+                        } else {
+                            next();
+                        }
+                    }
+                },
+                {
+                    path: 'post',
+                    name: 'post',
+                    component: PostCreatePage
                 },
                 {
                     path: 'user/:id',

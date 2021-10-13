@@ -166,6 +166,7 @@
                     this.postErr.bool = false;
                     this.postErr.message = '';
                     this.clearForm()
+                    this.$route.push({ to: 'main'});
                 }
             }
         }
