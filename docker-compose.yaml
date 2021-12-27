@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  server:
+    container_name: back-end-app
+    build: ./server
+    environment:
+      - DB_URL=mongodb://host.docker.internal:27017/nest
+      - PORT=3001
+      - SALT_ROUNDS=5
+      - JWT_SECRET=1d49a348bcd420c2315bdd6d3436bb56
+      - TOKEN_EXPIRES_TIME=24h
+    command: "npm run start:dev"
+    ports:
+    - 3001:3001
+    restart: always
+    links:
+      - mongo
+    depends_on:
+      - mongo
+
+  client:
+    container_name: front-end-app
+    build: ./client
+    environment:
+      - VUE_APP_LOGIN_REST=http://localhost:3001/api/auth/login
+      - VUE_APP_REGISTER_REST=http://localhost:3001/api/auth/register
+      - VUE_APP_REST_STATIC=http://localhost:3001/
+      - VUE_APP_REST_API=http://localhost:3001/api
+    command: "npm run serve"
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+    links:
+      - server
+
+  mongo:
+    container_name: mongo-db
+    image: 'mongo:latest'
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data/db:/data/db
